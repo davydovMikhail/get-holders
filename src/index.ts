@@ -1,3 +1,5 @@
+// ETHER PART:
+
 import axios from 'axios';
 
 // PARAMETERS:
@@ -27,3 +29,21 @@ const getHolders = async () => {
 }
 
 getHolders();
+
+// SOLANA PART:
+
+
+import { Connection, PublicKey } from '@solana/web3.js';
+
+const solanaEndPoint = 'https://api.mainnet-beta.solana.com';
+const addressToken = '4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R';
+
+async function fetchTokenLargestAccounts() {
+    const connection = new Connection(solanaEndPoint);
+    const tokenMintPublicKey = new PublicKey(addressToken);
+
+    const largestAccounts = await connection.getTokenLargestAccounts(tokenMintPublicKey, 'finalized');
+    console.log(largestAccounts);
+}
+
+fetchTokenLargestAccounts().catch(error => console.error('Error fetching token largest accounts:', error));
